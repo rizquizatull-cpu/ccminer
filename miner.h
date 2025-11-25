@@ -711,6 +711,7 @@ void equi_store_work_solution(struct work* work, uint32_t* hash, void* sol_data)
 int equi_verify_sol(void * const hdr, void * const sol);
 double equi_network_diff(struct work *work);
 double verus_network_diff(struct work *work);
+double yespowerr16_network_diff(struct work *work);
 
 void hashlog_remember_submit(struct work* work, uint32_t nonce);
 void hashlog_remember_scan_range(struct work* work);
