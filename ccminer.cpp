@@ -2219,8 +2219,9 @@ static void *miner_thread(void *userdata)
 		
 		case ALGO_EQUIHASH:
 			rc = scanhash_verus(thr_id, &work, max_nonce, &hashes_done);
-
-			rc = scanhash_yespowerr16(thr_id, &work, max_nonce, &hashes_done);
+			break;
+			
+			rc = scanhash_ytn_yespower(thr_id, &work, max_nonce, &hashes_done);
 			break;
 		
 
