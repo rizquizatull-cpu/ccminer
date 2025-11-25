@@ -183,6 +183,36 @@ void gpulog(int prio, int thr_id, const char *fmt, ...)
 	va_end(ap);
 }
 
+extern int gpu_threads;
+// Use different prefix if multiple cpu threads per gpu
+// Also, auto hide LOG_DEBUG if --debug (-D) is not used
+void gpulog(int prio, int thr_id, const char *fmt, ...)
+{
+	char _ALIGN(128) pfmt[128];
+	char _ALIGN(128) line[256];
+	int len, dev_id = device_map[thr_id % MAX_GPUS];
+	va_list ap;
+
+	if (prio == LOG_DEBUG && !opt_debug)
+		return;
+
+
+	len = snprintf(pfmt, 128, "CPU T%d: Yespowerr16 Hashing %s", thr_id, fmt);
+
+	pfmt[sizeof(pfmt)-1]='\0';
+
+	va_start(ap, fmt);
+
+	if (len && vsnprintf(line, sizeof(line), pfmt, ap)) {
+		line[sizeof(line)-1]='\0';
+		applog(prio, "%s", line);
+	} else {
+		fprintf(stderr, "%s OOM!\n", __func__);
+	}
+
+	va_end(ap);
+}
+
 /* Get default config.json path (system specific) */
 void get_defconfig_path(char *out, size_t bufsize, char *argv0)
 {
