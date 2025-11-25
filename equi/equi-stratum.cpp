@@ -40,6 +40,12 @@ double target_to_diff_verus(uint32_t target){
     return std::ldexp(0x0f0f0f / significand, exponent_diff);
 }
 
+double target_to_diff_yespowerr16(uint32_t target){
+    const unsigned exponent_diff = 8 * (0x20 - ((target >> 24) & 0xFF));
+    const double significand = target & 0xFFFFFF;
+    return std::ldexp(0x0f0f0f / significand, exponent_diff);
+}
+
 void diff_to_target_equi(uint32_t *target, double diff)
 {
 	uint64_t m;
@@ -90,6 +96,16 @@ double verus_network_diff(struct work *work)
     uint32_t nbits = work->data[26];
 
     double d = target_to_diff_verus(nbits);
+    // applog(LOG_BLUE, "target nbits: %08x", nbits);
+    // applog(LOG_BLUE, "target diff: %f", d);
+    return d;
+}
+
+double yespowerr16_network_diff(struct work *work)
+{
+    uint32_t nbits = work->data[26];
+
+    double d = target_to_diff_yespowerr16(nbits);
     // applog(LOG_BLUE, "target nbits: %08x", nbits);
     // applog(LOG_BLUE, "target diff: %f", d);
     return d;
