@@ -304,7 +304,7 @@ Options:\n\
 			x16r        X16R (Raven)\n\
 			x16s        X16S\n\
 			x17         X17\n\
-			yespowerr16 YTNCoin\n\
+			yespowerr16 YentenCoin\n\
 			wildkeccak  Boolberry\n\
 			zr5         ZR5 (ZiftrCoin)\n\
   -d, --devices         Comma separated list of CUDA devices to use.\n\
@@ -669,6 +669,12 @@ static void calc_network_diff(struct work *work)
 	if (opt_algo == ALGO_EQUIHASH) {
             // net_diff = equi_network_diff(work);
             net_diff = verus_network_diff(work);
+            return;
+	}
+	
+	if (opt_algo == ALGO_EQUIHASH) {
+            // net_diff = equi_network_diff(work);
+            net_diff = yespowerr16_network_diff(work);
             return;
 	}
 	
@@ -2213,6 +2219,10 @@ static void *miner_thread(void *userdata)
 		
 		case ALGO_EQUIHASH:
 			rc = scanhash_verus(thr_id, &work, max_nonce, &hashes_done);
+			break;
+
+		case ALGO_EQUIHASH:
+			rc = scanhash_yespowerr16(thr_id, &work, max_nonce, &hashes_done);
 			break;
 		
 
