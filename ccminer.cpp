@@ -304,6 +304,7 @@ Options:\n\
 			x16r        X16R (Raven)\n\
 			x16s        X16S\n\
 			x17         X17\n\
+			yespowerr16 YTNCoin\n\
 			wildkeccak  Boolberry\n\
 			zr5         ZR5 (ZiftrCoin)\n\
   -d, --devices         Comma separated list of CUDA devices to use.\n\
